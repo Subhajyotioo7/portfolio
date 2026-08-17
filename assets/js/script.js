@@ -158,7 +158,7 @@ for (let i = 0; i < navigationLinks.length; i++) {
   });
 }
 
-//myy adit Subha
+// Copy to clipboard functions
 
 function copyEmail(btn) {
   const email = "subhajyotimahatoofficial@gmail.com";
@@ -175,5 +175,51 @@ function copyPhone(btn) {
     const icon = btn.querySelector('ion-icon');
     icon.setAttribute('name', 'checkmark-outline');
     setTimeout(() => icon.setAttribute('name', 'copy-outline'), 1500);
+  });
+}
+
+// for project section
+
+const projectModal = document.querySelector("[data-project-modal]");
+const projectModalTitle = document.querySelector("[data-modal-title]");
+const projectModalDesc = document.querySelector("[data-modal-desc]");
+const projectModalGithub = document.querySelector("[data-modal-github]");
+const projectModalLive = document.querySelector("[data-modal-live]");
+const projectModalCloseBtns = document.querySelectorAll("[data-modal-close]");
+const projectTriggers = document.querySelectorAll("[data-modal-trigger]");
+
+projectTriggers.forEach(card => {
+  card.addEventListener("click", function () {
+    projectModalTitle.textContent = this.dataset.title;
+    projectModalDesc.textContent = this.dataset.desc;
+    projectModalGithub.href = this.dataset.github;
+    projectModalLive.href = this.dataset.live;
+    projectModal.classList.add("active");
+  });
+});
+
+projectModalCloseBtns.forEach(btn => {
+  btn.addEventListener("click", () => projectModal.classList.remove("active"));
+});
+
+
+// contact form -> gmail compose redirect
+const contactForm = document.querySelector("[data-form]");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const fullname = document.querySelector('[name="fullname"]').value;
+    const email = document.querySelector('[name="email"]').value;
+    const message = document.querySelector('[name="message"]').value;
+
+    const to = "subhajyotimahatoofficial@gmail.com";
+    const subject = encodeURIComponent(`Portfolio Contact from ${fullname}`);
+    const body = encodeURIComponent(`Name: ${fullname}\nEmail: ${email}\n\nMessage:\n${message}`);
+
+    const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${subject}&body=${body}`;
+
+    window.open(gmailComposeUrl, "_blank");
   });
 }
